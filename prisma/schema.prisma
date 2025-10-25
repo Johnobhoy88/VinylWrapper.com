@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Wrapper {
+  id              String   @id @default(cuid())
+  name            String
+  email           String   @unique
+  phone           String
+  bio             String   @db.Text
+  areasServed     String[] // Array of postcodes/areas like ["M1", "M2", "Salford"]
+  portfolioImages String[] // Array of image URLs
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([email])
+}
+
+model Lead {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  postcode    String
+  message     String   @db.Text
+  wrapperId   String
+  createdAt   DateTime @default(now())
+
+  @@index([wrapperId])
+  @@index([createdAt])
+}
