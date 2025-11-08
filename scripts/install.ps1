@@ -24,7 +24,7 @@ if (-not $SkipHardwareCheck) {
     & "$repoRoot\agents\hardware-advisor\advisor.ps1"
 
     Write-Host ""
-    $continue = Read-Host "Continue with installation? (Y/n)"
+    $continue = Read-Host "Continue with installation? Y/n"
     if ($continue -eq "n") {
         Write-Host "Installation cancelled." -ForegroundColor Red
         exit 0
@@ -60,7 +60,7 @@ Write-Host "System monitor MCP is available at:" -ForegroundColor Cyan
 Write-Host "  $repoRoot\mcps\system-monitor\monitor.ps1" -ForegroundColor White
 Write-Host ""
 Write-Host "To use with Claude Desktop, add to your config:" -ForegroundColor Cyan
-Write-Host @"
+$configExample = @"
 {
   "mcpServers": {
     "system-monitor": {
@@ -69,13 +69,14 @@ Write-Host @"
     }
   }
 }
-"@ -ForegroundColor DarkGray
+"@
+Write-Host $configExample -ForegroundColor DarkGray
 Write-Host ""
 
-$testMonitor = Read-Host "Test system monitor now? (Y/n)"
+$testMonitor = Read-Host "Test system monitor now? Y/n"
 if ($testMonitor -ne "n") {
     Write-Host ""
-    Write-Host "Starting system monitor (5 second test)..." -ForegroundColor Cyan
+    Write-Host "Starting system monitor for 5 second test..." -ForegroundColor Cyan
     $job = Start-Job -ScriptBlock {
         param($scriptPath)
         & $scriptPath -Mode Terminal
