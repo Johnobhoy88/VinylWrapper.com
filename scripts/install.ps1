@@ -30,7 +30,7 @@ if (-not $SkipHardwareCheck) {
         exit 0
     }
 } else {
-    Write-Host "[1/3] Skipping hardware check (--SkipHardwareCheck)" -ForegroundColor Yellow
+    Write-Host "[1/3] Skipping hardware check (-SkipHardwareCheck)" -ForegroundColor Yellow
 }
 
 # Step 2: Ollama Setup
