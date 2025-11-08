@@ -59,33 +59,8 @@ Write-Host ""
 Write-Host "System monitor MCP is available at:" -ForegroundColor Cyan
 Write-Host "  $repoRoot\mcps\system-monitor\monitor.ps1" -ForegroundColor White
 Write-Host ""
-Write-Host "To use with Claude Desktop, add to your config:" -ForegroundColor Cyan
-$configExample = @"
-{
-  "mcpServers": {
-    "system-monitor": {
-      "command": "powershell",
-      "args": ["-ExecutionPolicy", "Bypass", "-File", "$repoRoot\mcps\system-monitor\monitor.ps1"]
-    }
-  }
-}
-"@
-Write-Host $configExample -ForegroundColor DarkGray
+Write-Host "See mcps\system-monitor\README.md for Claude Desktop integration details" -ForegroundColor Cyan
 Write-Host ""
-
-$testMonitor = Read-Host "Test system monitor now? Y/n"
-if ($testMonitor -ne "n") {
-    Write-Host ""
-    Write-Host "Starting system monitor for 5 second test..." -ForegroundColor Cyan
-    $job = Start-Job -ScriptBlock {
-        param($scriptPath)
-        & $scriptPath -Mode Terminal
-    } -ArgumentList "$repoRoot\mcps\system-monitor\monitor.ps1"
-
-    Start-Sleep -Seconds 5
-    Stop-Job $job
-    Remove-Job $job
-}
 
 # Complete
 Write-Host ""
